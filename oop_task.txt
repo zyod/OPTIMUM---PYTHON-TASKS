@@ -1,0 +1,53 @@
+OOP CAPSTONE TASK — CAMPUS RESOURCE HUB
+
+Goal:
+Design a mini application that coordinates students, mentors, learning resources, and financial accounts for a fictional bootcamp.
+
+Functional Requirements:
+1. Core entities: `Person` (abstract base for shared behavior), `Student`, `Mentor`, `Course`, `Resource`, and `Wallet`.
+2. Every `Student` can enroll in multiple `Course` objects and borrow `Resource` objects. `Mentor` objects can approve or deny borrow requests.
+3. A `Wallet` (composition) tracks balances for each person; it must support deposits, withdrawals, and transfer operations with validation from Day 7.
+4. Introduce a `PremiumStudent` subclass inheriting from `Student`, overriding `enroll()` logic to include mentor matching and faster access to resources.
+5. Introduce at least one mixin (e.g., `AuditMixin`) that logs every monetary or resource action with timestamps to show multiple inheritance in practice.
+6. Provide a `ResourceCatalog` collection implementing `__len__`, `__iter__`, and a polymorphic `allocate()` method that can work with any object exposing `needs_resource()` and `id` attributes (duck typing).
+7. Create a `Report` utility with `@classmethod` constructors (e.g., `from_students`) and `@staticmethod` helpers to format currency or list totals.
+8. Implement properties for sensitive attributes (`Student.progress`, `Wallet.balance`) to control access and enforce invariants.
+
+Behavioral Requirements:
+1. The script must expose a `run_demo()` function that:
+   - Seeds at least two students (one `PremiumStudent`), one mentor, three courses, and three resources.
+   - Executes enrollments, wallet funding, resource borrowing, and mentor approvals.
+   - Transfers credits between wallets and logs the operations through the mixin.
+   - Populates a `ResourceCatalog`, iterates over it, and prints formatted descriptions via `__str__`/`__repr__`.
+2. The demo must print:
+   - Enrollment confirmations.
+   - Wallet balances before/after transfers.
+   - Resource allocation results (approved/denied).
+   - A summarized report string returned by the `Report` class with total students, total mentor approvals, and catalog size.
+
+Non-Functional Requirements:
+1. Constructors must validate inputs (non-empty names, positive balances, maximum capacity per course) and raise meaningful exceptions.
+2. Use docstrings (module-level + class-level) and type hints for public methods.
+3. Distinguish class vs instance attributes: e.g., `Course.max_students` (class attribute) and `Course.current_students` (instance list/dict).
+4. Use `@property`/setter for derived or guarded values (progress percentage, wallet balance).
+5. Implement at least two magic methods beyond `__str__` (e.g., `__eq__` for comparing people by ID, `__add__` for combining `Report` summaries).
+
+Output Expectations:
+Running `run_demo()` or `python -m campus_hub` must print a deterministic multi-line summary similar to:
+```
+Enrolled: Zahra -> Async Python (mentor: Omar)
+Wallet Transfer: Zahra -> Malik | -150.00 credits (balance: 350.00 / 450.00)
+Resource Approved: 3D Printer for Zahra by Mentor Omar
+Catalog (3 items): Resource(id=R-001, type='Lab', status='available'), ...
+REPORT: students=2 | premium=1 | mentor_approvals=2 | catalog_size=3
+```
+Exact wording can differ, but the output must include the four bullet points under Behavioral Requirement #2 in a human-readable format.
+
+Best Practices Checklist (verify before submission):
+1. Keep constructors lean; move complex setup to `@classmethod` factories when it improves clarity.
+2. Avoid public mutation of shared class attributes; expose read-only accessors when sharing state (e.g., total students).
+3. Prefer composition over inheritance when adding orthogonal responsibilities (e.g., `Wallet` rather than subclassing `Student` for finances); justify deviations with comments/docstrings.
+4. Guard every method that mutates money/resources with validation and helpful error messages.
+5. Keep magic methods intuitive—mirror Python semantics (e.g., `__add__` should not mutate in place).
+6. Write small helper methods for repeated validation or formatting instead of duplicating logic across classes.
+7. Include at least one unit-test-friendly seam (dependency injection or strategy object) even if you do not write tests; document it briefly.
