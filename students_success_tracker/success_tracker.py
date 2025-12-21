@@ -18,8 +18,8 @@ def check_venv():
 
 
 @app.command(name="init-db")
-def init_db_cmd(seed_demo: bool = typer.Option(False)):
-    init_db(seed_demo)
+def init_db_cmd():
+    init_db()
     console.print("[green]Database initialized successfully.[/green]")
 
 

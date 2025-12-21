@@ -12,7 +12,8 @@ def get_connection():
     return conn
 
 
-def init_db(seed_demo: bool = False):
+def init_db():
+    """Initialize the database and create the students table if it does not exist."""
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
@@ -26,19 +27,6 @@ def init_db(seed_demo: bool = False):
                 last_updated TEXT
             );
         """)
-        if seed_demo:
-            demo_students = [
-                ("Alice Smith", "alice@example.com", "Math", 3.5, "active"),
-                ("Bob Jones", "bob@example.com", "Physics", 3.8, "active")
-            ]
-            for name, email, major, gpa, status in demo_students:
-                try:
-                    cursor.execute("""
-                        INSERT INTO students (name, email, major, gpa, status, last_updated)
-                        VALUES (?, ?, ?, ?, ?, ?)
-                    """, (name, email, major, gpa, status, datetime.utcnow().isoformat()))
-                except sqlite3.IntegrityError:
-                    continue
         conn.commit()
 
 
