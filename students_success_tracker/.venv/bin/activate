@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='/home/abdelrahman-alzyoud/Desktop/ZYOUD/Python/TASK 17/.venv'
+VIRTUAL_ENV=/home/abdelrahman-alzyoud/Desktop/ZYOUD/Python/OPTIMUM---PYTHON-TASKS/students_success_tracker/.venv
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

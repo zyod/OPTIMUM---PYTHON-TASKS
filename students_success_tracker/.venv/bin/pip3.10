@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/home/abdelrahman-alzyoud/Desktop/ZYOUD/Python/TASK 17/.venv/bin/python3" "$0" "$@"
-' '''
+#!/home/abdelrahman-alzyoud/Desktop/ZYOUD/Python/OPTIMUM---PYTHON-TASKS/students_success_tracker/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

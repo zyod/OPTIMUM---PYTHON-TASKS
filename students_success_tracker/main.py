@@ -1,5 +1,4 @@
 import sys
-import sqlite3
 
 if sys.prefix == sys.base_prefix:
     raise RuntimeError(
@@ -8,5 +7,12 @@ if sys.prefix == sys.base_prefix:
     )
 
 
+from db import init_db
+
+def main():
+    init_db()
+    print("success_tracker CLI started. Database is ready.")
 
 
+if __name__ == "__main__":
+    main()
